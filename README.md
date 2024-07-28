@@ -1,5 +1,7 @@
 # Using Entity Framework Core Database First
 
+ASP.NET Core MVC กับระบบฐานข้อมูล SQL Server ด้วย Entity Framework Core
+
 1. Install Visual Studio Code
    https://code.visualstudio.com/Download
 
@@ -63,4 +65,58 @@ using UsingEFCoreDatabaseFirst.Data;
 
 // Connect Database
 builder.Services.AddDbContext<NorthwindContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+```
+
+# Controllers
+
+New C# --> Controller --> ProductController
+
+```cs
+// property of class ProductController
+private NorthwindContext _db = new NorthwindContext();
+
+// method of class ProductController
+public IActionResult Index()
+{
+  var products = from p in _db.Products select p;
+  return View(products);
+}
+```
+
+# Shared
+
+Shared --> `_Layout.cshtml`
+add <li> element
+
+```cshtml
+<nav>
+  <li class="nav-item">
+    <a
+      class="nav-link text-dark"
+      asp-area=""
+      asp-controller="Product"
+      asp-action="Index"
+      >Product</a
+    >
+  </li>
+</nav>
+```
+
+# Views
+
+create directory in Views
+create file `Index.cshtml`
+
+```cshtml
+@model IEnumerable<UsingEFCoreDatabaseFirst.Models.db.Product>
+  @{ ViewData["Title"] = "Product Page"; }
+
+  <h2>Index</h2>
+  <p>Product Page</p>
+
+  <!-- Table Products Model -->
+  <table>
+    <!-- actions... -->
+  </table>
+>
 ```
