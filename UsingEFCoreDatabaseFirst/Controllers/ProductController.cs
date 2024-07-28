@@ -23,8 +23,8 @@ namespace UsingEFCoreDatabaseFirst.Controllers
         {
             // var products = from p in context.Products select p;
             var products = _db.Products
-                                  .Include(p => p.Category)  // join table
-                                  .Include(p => p.Supplier); // join table
+                              .Include(p => p.Category)  // join table
+                              .Include(p => p.Supplier); // join table
             return View(products.ToList());
         }
 
@@ -49,6 +49,18 @@ namespace UsingEFCoreDatabaseFirst.Controllers
             ViewData["CategoryId"] = new SelectList(_db.Categories, "CategoryId", "CategoryName");
             ViewData["SupplierId"] = new SelectList(_db.Suppliers, "SupplierId", "CompanyName");
             return View(products);
+        }
+
+        public IActionResult SearchProducts(string q)
+        {
+            if (string.IsNullOrEmpty(q))
+            {
+                return View("SearchProducts", _db.Products.ToList());
+            }
+            else
+            {
+                return View("SearchProducts", _db.Products.Where(p => p.ProductName.Contains(q)).ToList());
+            }
         }
 
     }
