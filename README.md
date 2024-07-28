@@ -120,3 +120,6 @@ create file `Index.cshtml`
   </table>
 >
 ```
+
+# การแสดงข้อมูลร่วมกัน 2 ตาราง (๋Join Table)
+
